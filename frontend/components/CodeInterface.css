@@ -1,0 +1,14 @@
+.codemirror-area {
+  height: 100%;
+}
+
+.cm-editor {
+  font-size: x-large;
+}
+
+/*
+.cm-editor {
+  background-color: #393c47;
+  color: white;
+}
+*/

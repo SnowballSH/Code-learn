@@ -11,13 +11,11 @@
 }
 
 .chatbar {
-  border: 1px solid whitesmoke;
   grid-area: 1 / 1 / 9 / 4;
 
   background-color: #989e9e;
 }
 .task {
-  border: 1px solid whitesmoke;
   grid-area: 1 / 4 / 2 / 9;
 
   display: flex;
@@ -27,7 +25,6 @@
   background-color: #e2e4e8;
 }
 .codearea {
-  border-right: 1px solid whitesmoke;
   grid-area: 2 / 4 / 9 / 9;
 
   background-color: #393c47;

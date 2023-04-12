@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  codelearn-backend:
+    image: codelearn_backend_dev
+    volumes:
+      - type: bind
+        source: ./backend
+        target: /backend
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+      dockerfile: ./backend.dev.dockerfile
+    environment:
+      PORT: 8080
+  codelearn-frontend:
+    image: codelearn_frontend_dev
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /frontend
+    ports:
+      - "5173:5173"
+    build:
+      context: .
+      dockerfile: ./frontend.dev.dockerfile

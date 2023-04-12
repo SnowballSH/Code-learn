@@ -1,9 +1,15 @@
 import { useState, useRef, useEffect, ChangeEvent, FormEvent } from "react";
 import "./ChatInterface.css";
 
+import type {
+  Message,
+  PromptAPIRequest,
+  PromptAPIResponse,
+} from "../types/types";
+
 interface ChatInterfaceProps {
   onSendMessage: (message: string) => void;
-  messages: Array<string>;
+  messages: Array<Message>;
 }
 
 function ChatInterface({ onSendMessage, messages }: ChatInterfaceProps) {
@@ -48,7 +54,7 @@ function ChatInterface({ onSendMessage, messages }: ChatInterfaceProps) {
       <div className="chat-display" ref={chatDisplayRef}>
         {messages.map((message, index) => (
           <p key={index} className="message">
-            {message}
+            {message.role == 0 ? "助手" : "你"}: {message.msg}
           </p>
         ))}
       </div>
