@@ -38,7 +38,17 @@ async fn prompt_gpt(
     data: PromptRequest,
     client: &OpenAI,
 ) -> Result<String, Box<dyn std::error::Error>> {
-    let message_history = data.history.iter().map(|x| {
+    let mut message_history = vec![ChatCompletionMessageRequestBuilder::default()
+        .role(Role::System)
+        .content(format!(
+            "你是一个AI编程助手。你的任务是引导及帮助用户解决一道编程问题。用户是一个编程新手，且想通过与你互动来学习Python。
+善良地，友好地回答问题，但是不要给答案。通过问用户问题的方式来教用户，提升用户的逻辑思维能力。拒绝提供代码，但帮助用户通过思考解决问题。不要说太多。只用中文回答。
+目前的问题是：计算数组的算术平均值"
+        ))
+        .build()
+        .unwrap()];
+
+    message_history.extend(data.history.iter().map(|x| {
         ChatCompletionMessageRequestBuilder::default()
             .role(if x.role == 0 {
                 Role::Assistant
@@ -48,11 +58,11 @@ async fn prompt_gpt(
             .content(x.msg.clone())
             .build()
             .unwrap()
-    });
+    }));
 
     let req = CreateChatRequestBuilder::default()
         .model("gpt-3.5-turbo")
-        .messages(message_history.collect::<Vec<_>>())
+        .messages(message_history)
         .build()?;
 
     let res = client.chat().create(&req).await?;

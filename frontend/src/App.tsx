@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 import ChatInterface from "../components/ChatInterface";
-import CodeInterface from "../components/CodeInterface";
+import CodeInterface, { defaultCode } from "../components/CodeInterface";
 
 import type {
   Message,
@@ -22,10 +22,15 @@ function App() {
   }, []);
 
   const [messages, setMessages] = useState<Array<Message>>([]);
+  const [code, setCode] = useState<string>(defaultCode);
 
   const handleSendMessage = (message: string) => {
     const new_messages = [
       ...messages,
+      {
+        role: 1,
+        msg: "我现在的代码是：\n```python\n" + code + "\n```",
+      },
       {
         role: 1,
         msg: message,
@@ -52,7 +57,11 @@ function App() {
       });
     });
 
-    setMessages(new_messages);
+    setMessages((prevMessages) => [...prevMessages, { role: 1, msg: message }]);
+  };
+
+  const handleCodeChange = (code: string) => {
+    setCode(code);
   };
 
   return (
@@ -66,7 +75,7 @@ function App() {
       </div>
 
       <div className="codearea">
-        <CodeInterface />
+        <CodeInterface onCodeChange={handleCodeChange} />
       </div>
     </div>
   );

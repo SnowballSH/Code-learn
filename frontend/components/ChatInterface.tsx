@@ -54,7 +54,8 @@ function ChatInterface({ onSendMessage, messages }: ChatInterfaceProps) {
       <div className="chat-display" ref={chatDisplayRef}>
         {messages.map((message, index) => (
           <p key={index} className="message">
-            {message.role == 0 ? "助手" : "你"}: {message.msg}
+            <b>{message.role == 0 ? "助手" : "你"}: </b>
+            {message.msg}
           </p>
         ))}
       </div>

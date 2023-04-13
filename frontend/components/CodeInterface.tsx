@@ -3,13 +3,19 @@ import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
 import "./CodeInterface.css";
 
-function CodeInterface() {
+interface ChatInterfaceProps {
+  onCodeChange: (code: string) => void;
+}
+
+export const defaultCode = "print('Hello World')";
+
+function CodeInterface({ onCodeChange }: ChatInterfaceProps) {
   const onChange = useCallback((value: string, viewUpdate: any) => {
-    //console.log("value:", value);
+    onCodeChange(value);
   }, []);
   return (
     <CodeMirror
-      value="print('Hello World')"
+      value={defaultCode}
       className="codemirror-area"
       extensions={[python()]}
       onChange={onChange}
