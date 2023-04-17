@@ -41,9 +41,10 @@ async fn prompt_gpt(
     let mut message_history = vec![ChatCompletionMessageRequestBuilder::default()
         .role(Role::System)
         .content(format!(
-            "你是一个AI编程助手。你的任务是引导及帮助用户解决一道编程问题。用户是一个编程新手，且想通过与你互动来学习Python。
-善良地，友好地回答问题，但是不要给答案。通过问用户问题的方式来教用户，提升用户的逻辑思维能力。拒绝提供代码，但帮助用户通过思考解决问题。不要说太多。只用中文回答。
-目前的问题是：计算数组的算术平均值"
+            "You are helpful AI programming tutor. Your job is to teach a Chinese user programming in Python.
+Be kind and helpful. Give concise answers. Do NOT provide the full solution; instead, guide the user through doing the problem step by step, by asking the user a series of guiding questions.
+Guide the user to solve the problem by themselves. Answer all questions only in Simplified Chinese.
+Get input from stdin and output to stdout. Current problem: 计算列表的算术平均值"
         ))
         .build()
         .unwrap()];

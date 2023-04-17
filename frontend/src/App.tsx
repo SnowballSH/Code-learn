@@ -11,7 +11,7 @@ import type {
 } from "../types/types";
 
 function getTask() {
-  return "目标 - 计算数组的算术平均值";
+  return "目标 - 计算列表的算术平均值";
 }
 
 function App() {
