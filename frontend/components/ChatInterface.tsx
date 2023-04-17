@@ -1,11 +1,9 @@
 import { useState, useRef, useEffect, ChangeEvent, FormEvent } from "react";
 import "./ChatInterface.css";
 
-import type {
-  Message,
-  PromptAPIRequest,
-  PromptAPIResponse,
-} from "../types/types";
+import type { Message } from "../types/types";
+
+import MarkdownPreview from "@uiw/react-markdown-preview";
 
 interface ChatInterfaceProps {
   onSendMessage: (message: string) => void;
@@ -53,10 +51,15 @@ function ChatInterface({ onSendMessage, messages }: ChatInterfaceProps) {
     <div className="chat-interface">
       <div className="chat-display" ref={chatDisplayRef}>
         {messages.map((message, index) => (
-          <p key={index} className="message">
-            <b>{message.role == 0 ? "助手" : "你"}: </b>
-            {message.msg}
-          </p>
+          <div key={index}>
+            <p className="message">
+              <b>{message.role == 0 ? "助手" : "你"}: </b>
+            </p>
+            <MarkdownPreview
+              source={message.msg}
+              style={{ backgroundColor: "#f5f5f5" }}
+            />
+          </div>
         ))}
       </div>
       <form onSubmit={handleSubmit} className="chat-input-form">
