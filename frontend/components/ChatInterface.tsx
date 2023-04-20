@@ -8,9 +8,14 @@ import MarkdownPreview from "@uiw/react-markdown-preview";
 interface ChatInterfaceProps {
   onSendMessage: (message: string) => void;
   messages: Array<Message>;
+  allowSubmit: boolean;
 }
 
-function ChatInterface({ onSendMessage, messages }: ChatInterfaceProps) {
+function ChatInterface({
+  onSendMessage,
+  messages,
+  allowSubmit,
+}: ChatInterfaceProps) {
   const [inputText, setInputText] = useState<string>("");
 
   // reference to the chat display div
@@ -70,7 +75,7 @@ function ChatInterface({ onSendMessage, messages }: ChatInterfaceProps) {
           onKeyDown={handleKeyDown}
           placeholder="问你想问的问题..."
         />
-        <button type="submit" className="send-button">
+        <button type="submit" className="send-button" disabled={!allowSubmit}>
           发送
         </button>
       </form>

@@ -50,8 +50,14 @@
   outline: none;
   transition: 0.3s;
   font-size: large;
+  cursor: pointer;
 }
 
 .send-button:hover {
   background-color: #81eaff;
+}
+
+.send-button:disabled {
+  background-color: #c2c2c2;
+  cursor: not-allowed;
 }
