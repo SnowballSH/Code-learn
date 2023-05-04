@@ -15,13 +15,18 @@ function CodeInterface({ onCodeChange }: ChatInterfaceProps) {
     onCodeChange(value);
   }, []);
   return (
-    <CodeMirror
-      value={defaultCode}
-      className="codemirror-area"
-      extensions={[python()]}
-      onChange={onChange}
-      height="100%"
-    />
+    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+      <div className="chat-title">
+        <h3>代码区</h3>
+      </div>
+      <CodeMirror
+        value={defaultCode}
+        className="codemirror-area"
+        extensions={[python()]}
+        onChange={onChange}
+        height="100%"
+      />
+    </div>
   );
 }
 

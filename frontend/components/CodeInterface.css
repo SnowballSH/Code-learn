@@ -1,12 +1,54 @@
 .codemirror-area {
   height: 100%;
+  border: none;
 }
 
 .cm-editor {
   font-size: x-large;
+  color: black;
+  background-color: #effbf9;
+  outline: none;
+}
+
+.cm-editor.cm-focused {
+  outline: none;
+}
+
+.cm-gutters {
+  border-right: none !important;
+}
+
+.cm-gutter {
+  transition: background-color 0.3s;
+  background-color: #bae8e8;
 }
 
 /*
+.cm-focused .cm-gutter {
+  background-color: #ffd803;
+}
+*/
+
+.cm-activeLineGutter {
+  background-color: #b0dcdc !important;
+}
+
+.cm-activeLine {
+  background-color: #d4f6f6 !important;
+}
+
+/*
+.cm-focused .cm-activeLineGutter {
+  background-color: #ece09c !important;
+}
+
+.cm-focused .cm-activeLine {
+  background-color: #fff7c9 !important;
+}
+*/
+
+/*
+dark theme
 .cm-editor {
   background-color: #393c47;
   color: white;

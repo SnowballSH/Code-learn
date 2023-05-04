@@ -86,45 +86,56 @@ function App() {
   };
 
   return (
-    <div className="parent">
-      <div className="chatbar">
-        <ChatInterface
-          onSendMessage={handleSendMessage}
-          messages={messages}
-          allowSubmit={!requesting}
-        />
-      </div>
+    <>
+      <div className="parent">
+        <div className="chatbar">
+          <ChatInterface
+            onSendMessage={handleSendMessage}
+            messages={messages}
+            allowSubmit={!requesting}
+          />
+        </div>
 
-      <div className="task">
-        {task ? (
-          <div>
-            <h1>{task.task}</h1>
-            <p>{task.description}</p>
-            <hr />
-            <h2>示例</h2>
-            <div>
-              {task.examples.map((example, index) => (
-                <div key={index}>
-                  <p>
-                    <b>输入：</b>
-                    {example.input}
-                    &nbsp;&nbsp;&nbsp;
-                    <b>输出：</b>
-                    {example.output}
-                  </p>
+        <div className="task">
+          {task ? (
+            <>
+              <div className="task-name">
+                <div className="task-title">
+                  <h3>{task.task}</h3>
                 </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
+                <div className="task-body">
+                  <p>{task.description}</p>
+                </div>
+              </div>
+              <div className="task-example">
+                <div className="task-title">
+                  <h3>示例</h3>
+                </div>
+                <div className="task-body">
+                  <div>
+                    {task.examples.map((example, index) => (
+                      <div key={index}>
+                        <p>
+                          <b>输入：{example.input}</b>
 
-      <div className="codearea">
-        <CodeInterface onCodeChange={handleCodeChange} />
+                          <b>输出：{example.output}</b>
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
+
+        <div className="codearea">
+          <CodeInterface onCodeChange={handleCodeChange} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

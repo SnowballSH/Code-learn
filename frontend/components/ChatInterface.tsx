@@ -54,16 +54,34 @@ function ChatInterface({
 
   return (
     <div className="chat-interface">
+      <div className="chat-title">
+        <h3>小助手</h3>
+      </div>
       <div className="chat-display" ref={chatDisplayRef}>
         {messages.map((message, index) => (
           <div key={index}>
-            <p className="message">
-              <b>{message.role == 0 ? "助手" : "你"}: </b>
-            </p>
-            <MarkdownPreview
-              source={message.msg}
-              style={{ backgroundColor: "#f5f5f5" }}
-            />
+            {/*
+              <p className="message">
+                <b>{message.role == 0 ? "助手" : "你"}: </b>
+              </p>
+              */}
+            <div
+              style={{
+                float: message.role == 0 ? "left" : "right",
+                maxWidth: "95%",
+                width: "fit-content",
+              }}
+            >
+              <MarkdownPreview
+                source={message.msg}
+                style={{
+                  backgroundColor: message.role == 0 ? "#bae8e8" : "#C8FB78",
+                  borderRadius: "10px",
+                  padding: "10px",
+                  margin: "10px",
+                }}
+              />
+            </div>
           </div>
         ))}
       </div>
