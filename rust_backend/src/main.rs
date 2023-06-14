@@ -30,7 +30,7 @@ struct PromptRequest {
 }
 
 #[derive(Deserialize, Serialize)]
-struct PromptRespond {
+struct PromptResponse {
     result: String,
 }
 
@@ -84,7 +84,7 @@ async fn prompt(data: web::Data<APIState>, req_body: web::Json<PromptRequest>) -
 
     let ans = prompt_gpt(req_body.0, &client).await;
     if let Ok(ans) = ans {
-        let res = PromptRespond { result: ans };
+        let res = PromptResponse { result: ans };
         HttpResponse::Ok().json(web::Json(res))
     } else {
         eprintln!("{:?}", ans);
