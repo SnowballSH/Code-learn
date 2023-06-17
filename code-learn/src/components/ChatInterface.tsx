@@ -15,10 +15,12 @@ const MarkdownPreview = dynamic(
 
 interface ChatInterfaceProps {
   code: string;
+  id: number;
 }
 
 function ChatInterface({
   code,
+  id,
 }: ChatInterfaceProps) {
   // reference to the chat display div
   const chatDisplayRef = useRef<HTMLDivElement>(null);
@@ -47,7 +49,8 @@ function ChatInterface({
   const { messages, input, handleInputChange, handleSubmit, setInput } = useChat({
     onFinish,
     body: {
-      code: code,
+      code,
+      id,
     }
   });
 

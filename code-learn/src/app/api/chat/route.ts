@@ -1,5 +1,7 @@
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
-import { OpenAIStream, StreamingTextResponse, Message } from 'ai';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
+
+import { Task } from '@/types/types';
 
 // Create an OpenAI API client (that's edge friendly!)
 const config = new Configuration({
@@ -12,22 +14,28 @@ Be kind and helpful. Give concise answers. Do NOT provide the full solution; ins
 Guide the user to solve the problem by themselves. Answer all questions only in Simplified Chinese.
 The user should obtain all input from \`stdin\` and output to \`stdout\`. Assume input is valid and in the example format.
 
-Current problem: 计算列表的算术平均值
-Examples:
-输入：3 -8 0 5 2   输出：0.4
-输入：5 7   输出：6.0`;
+Current problem: `;
 
 // IMPORTANT! Set the runtime to edge
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 export async function POST(req: Request) {
     // Extract the `messages` from the body of the request
-    const { messages, code }: { messages: ChatCompletionRequestMessage[], code: string; } = await req.json();
+    const { messages, code, id }: { messages: ChatCompletionRequestMessage[], code: string, id: number; } = await req.json();
+
+    const problemResp = await fetch("http://localhost:3000/api/problems", {
+        method: "POST",
+        body: JSON.stringify({ id }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    const task = await problemResp.json() as Task;
 
     const prompt: ChatCompletionRequestMessage[] = [
         {
             role: 'system',
-            content: PROMPT,
+            content: PROMPT + task.task + "\n\n" + task.description + "\n\n" + task.examples.map((example) => "input: " + example.input + "\noutput: " + example.output).join("\n"),
         },
         ...messages.slice(0, -1),
         {

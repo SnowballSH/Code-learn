@@ -7,29 +7,18 @@ import ChatInterface from "../components/ChatInterface";
 import CodeInterface, { defaultCode } from "../components/CodeInterface";
 
 import type {
-  Message,
-  PromptAPIRequest,
-  PromptAPIResponse,
   Task,
 } from "../types/types";
 
 async function getTask(): Promise<Task> {
-  return {
-    id: 1,
-    task: "目标 - 计算列表的算术平均值",
-    description:
-      "用input()函数输入一个列表，然后用print()函数输出这个列表的算术平均值。算数平均值是所有数字的总和除以数字的个数。",
-    examples: [
-      {
-        input: "3 -8 0 5 2",
-        output: "0.4",
-      },
-      {
-        input: "5 7",
-        output: "6.0",
-      },
-    ],
-  } as Task;
+  const problemResp = await fetch("http://localhost:3000/api/problems", {
+    method: "POST",
+    body: JSON.stringify({ id: 0 }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return await problemResp.json() as Task;
 }
 
 function Home() {
@@ -50,7 +39,7 @@ function Home() {
       <div className="parent">
         <div className="chatbar">
           {
-            <ChatInterface code={code} />
+            <ChatInterface code={code} id={0} />
           }
         </div>
 
@@ -59,7 +48,7 @@ function Home() {
             <>
               <div className="task-name">
                 <div className="task-title">
-                  <h3>{task.task}</h3>
+                  <h3>目标 - {task.task}</h3>
                 </div>
                 <div className="task-body">
                   <p>{task.description}</p>
@@ -67,7 +56,7 @@ function Home() {
               </div>
               <div className="task-example">
                 <div className="task-title">
-                  <h3>示例</h3>
+                  <h3>样例</h3>
                 </div>
                 <div className="task-body">
                   <div>
