@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect, useState } from "react";
-import "./App.css";
+import "./page.css";
 
 import ChatInterface from "../components/ChatInterface";
 import CodeInterface, { defaultCode } from "../components/CodeInterface";
@@ -30,56 +32,14 @@ async function getTask(): Promise<Task> {
   } as Task;
 }
 
-function App() {
+function Home() {
   const [task, setTask] = useState<Task>();
 
   useEffect(() => {
     getTask().then((task) => setTask(task));
   }, []);
 
-  const [messages, setMessages] = useState<Array<Message>>([]);
   const [code, setCode] = useState<string>(defaultCode);
-  const [requesting, setRequesting] = useState<boolean>(false);
-
-  const handleSendMessage = (message: string) => {
-    if (requesting) return;
-    setRequesting(true);
-
-    const new_messages = [
-      ...messages,
-      {
-        role: 1,
-        msg: "我现在的代码是：\n```python\n" + code + "\n```",
-      },
-      {
-        role: 1,
-        msg: message,
-      },
-    ];
-
-    fetch("http://localhost:8080/api/prompt", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        history: new_messages,
-      } as PromptAPIRequest),
-    }).then((res) => {
-      res.json().then((data) => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            role: 0,
-            msg: (data as PromptAPIResponse).result,
-          },
-        ]);
-        setRequesting(false);
-      });
-    });
-
-    setMessages((prevMessages) => [...prevMessages, { role: 1, msg: message }]);
-  };
 
   const handleCodeChange = (code: string) => {
     setCode(code);
@@ -89,11 +49,9 @@ function App() {
     <>
       <div className="parent">
         <div className="chatbar">
-          <ChatInterface
-            onSendMessage={handleSendMessage}
-            messages={messages}
-            allowSubmit={!requesting}
-          />
+          {
+            <ChatInterface code={code} />
+          }
         </div>
 
         <div className="task">
@@ -139,4 +97,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
