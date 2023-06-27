@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     // Extract the `messages` from the body of the request
     const { messages, code, id }: { messages: ChatCompletionRequestMessage[], code: string, id: number; } = await req.json();
 
-    const problemResp = await fetch("http://localhost:3000/api/problems", {
+    const problemResp = await fetch(`${process.env.DOMAIN}/api/problems`, {
         method: "POST",
         body: JSON.stringify({ id }),
         headers: {

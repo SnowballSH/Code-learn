@@ -11,7 +11,7 @@ import type {
 } from "../types/types";
 
 async function getTask(): Promise<Task> {
-  const problemResp = await fetch("http://localhost:3000/api/problems", {
+  const problemResp = await fetch(`/api/problems`, {
     method: "POST",
     body: JSON.stringify({ id: 0 }),
     headers: {
